@@ -11,9 +11,10 @@ Pod::Spec.new do |s|
   s.authors      = package['author']
   s.homepage     = package['homepage']
   s.platform     = :ios, "9.0"
+  s.swift_version = '4.0'
 
   s.source       = { :git => "https://github.com/jonathan-k4/react-native-ble-peripheral.git" }
-  s.source_files  = "ios/**/*.{h,m}"
+  s.source_files  = "ios/**/*.{h,m,swift}"
 
   s.dependency 'React'
 end
