@@ -6,6 +6,7 @@ import CoreBluetooth
 @objc(BLEPeripheral)
 class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
     var advertising: Bool = false
+	var powered: Bool = false
     var hasListeners: Bool = false
     var name: String = "RN_BLE"
     var servicesMap = Dictionary<String, CBMutableService>()
@@ -29,6 +30,11 @@ class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
     @objc func isAdvertising(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
         resolve(advertising)
         print("called isAdvertising")
+    }
+
+	@objc func isPoweredOn(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
+        resolve(powered)
+        print("called isPoweredOn")
     }
     
     @objc(addService:primary:)
@@ -236,8 +242,12 @@ class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
 extension CBManagerState: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .poweredOff: return ".poweredOff"
-        case .poweredOn: return ".poweredOn"
+        case .poweredOff: 
+			powered = false;
+			return ".poweredOff"
+        case .poweredOn: 
+			powered = true;
+			return ".poweredOn"
         case .resetting: return ".resetting"
         case .unauthorized: return ".unauthorized"
         case .unknown: return ".unknown"

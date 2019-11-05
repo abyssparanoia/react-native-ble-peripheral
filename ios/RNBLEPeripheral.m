@@ -11,6 +11,12 @@ RCT_EXTERN_METHOD(
     (RCTPromiseResolveBlock)resolve
     rejecter: (RCTPromiseRejectBlock)reject
 )
+
+RCT_EXTERN_METHOD(
+    isPoweredOn:
+    (RCTPromiseResolveBlock)resolve
+    rejecter: (RCTPromiseRejectBlock)reject
+)
 RCT_EXTERN_METHOD(
     setName: (NSString *)string
 )
@@ -35,5 +41,6 @@ RCT_EXTERN_METHOD(
     data: (NSString *)data
 )
 RCT_EXTERN_METHOD(requiresMainQueueSetup)
+
 
 @end

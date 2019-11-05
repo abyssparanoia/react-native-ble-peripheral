@@ -244,4 +244,20 @@ public class RNBLEModule extends ReactContextBaseJavaModule{
         promise.resolve(this.advertising);
     }
 
+	@ReactMethod 
+	public void isPoweredOn(Promise promise) {
+
+		mBluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = mBluetoothManager.getAdapter();
+
+		boolean isPoweredOn = false;
+
+		if(mBluetoothAdapter.getState() == BluetoothAdapter.STATE_ON)
+		{
+			isPoweredOn = true;
+		}
+
+		resolve(isPoweredOn);
+	}
+
 }
