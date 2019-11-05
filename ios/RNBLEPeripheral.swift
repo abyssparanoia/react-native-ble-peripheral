@@ -166,6 +166,15 @@ class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
         } else {
             state = peripheral.state
         }
+        let stateStr = String(describing: state);
+        if(stateStr == ".poweredOn")
+        {
+            powered = true;
+        }
+        if(stateStr == ".poweredOff")
+        {
+            powered = false;
+        }
         alertJS("BT state change: \(state)")
     }
 
@@ -242,12 +251,8 @@ class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
 extension CBManagerState: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .poweredOff: 
-			powered = false;
-			return ".poweredOff"
-        case .poweredOn: 
-			powered = true;
-			return ".poweredOn"
+        case .poweredOff: return ".poweredOff"
+        case .poweredOn: return ".poweredOn"
         case .resetting: return ".resetting"
         case .unauthorized: return ".unauthorized"
         case .unknown: return ".unknown"
