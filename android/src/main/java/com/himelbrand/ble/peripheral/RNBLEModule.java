@@ -257,7 +257,7 @@ public class RNBLEModule extends ReactContextBaseJavaModule{
 			isPoweredOn = true;
 		}
 
-		resolve(isPoweredOn);
+		promise.resolve(isPoweredOn);
 	}
 
 }
