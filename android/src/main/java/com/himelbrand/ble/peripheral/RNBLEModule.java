@@ -169,6 +169,7 @@ public class RNBLEModule extends ReactContextBaseJavaModule{
         mBluetoothAdapter.setName(this.name);
         // Ensures Bluetooth is available on the device and it is enabled. If not,
 // displays a dialog requesting user permission to enable Bluetooth.
+		mBluetoothAdapter.enable();
 
         mBluetoothDevices = new HashSet<>();
         mGattServer = mBluetoothManager.openGattServer(reactContext, mGattServerCallback);
