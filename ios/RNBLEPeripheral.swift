@@ -51,13 +51,15 @@ class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
         }
     }
     
-    @objc(addCharacteristicToService:uuid:permissions:properties:data:)
-    func addCharacteristicToService(_ serviceUUID: String, uuid: String, permissions: UInt, properties: UInt, data: String) {
+    @objc(addCharacteristicToService:uuid:permissions:properties:)
+    func addCharacteristicToService(_ serviceUUID: String, uuid: String, permissions: UInt, properties: UInt) {
         let characteristicUUID = CBUUID(string: uuid)
         let propertyValue = CBCharacteristicProperties(rawValue: properties)
         let permissionValue = CBAttributePermissions(rawValue: permissions)
-        let byteData: Data = data.data(using: .utf8)!
-        let characteristic = CBMutableCharacteristic( type: characteristicUUID, properties: propertyValue, value: byteData, permissions: permissionValue)
+        let characteristic = CBMutableCharacteristic( type: characteristicUUID, properties: propertyValue, value: nil, permissions: permissionValue)
+        if servicesMap[serviceUUID]?.characteristics == nil {
+            servicesMap[serviceUUID]?.characteristics = []
+        }
         servicesMap[serviceUUID]?.characteristics?.append(characteristic)
         print("added characteristic to service")
     }
@@ -169,6 +171,14 @@ class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
         let stateStr = String(describing: state);
         if(stateStr == ".poweredOn")
         {
+            servicesMap.keys.forEach { uuid in
+                guard let service = servicesMap[uuid] else {
+                    return
+                }
+                manager.add(service)
+                print("added service \(uuid)")
+            }
+
             powered = true;
         }
         if(stateStr == ".poweredOff")
