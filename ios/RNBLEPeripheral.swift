@@ -171,6 +171,14 @@ class BLEPeripheral: RCTEventEmitter, CBPeripheralManagerDelegate {
         let stateStr = String(describing: state);
         if(stateStr == ".poweredOn")
         {
+            servicesMap.keys.forEach { uuid in
+                guard let service = servicesMap[uuid] else {
+                    return
+                }
+                manager.add(service)
+                print("added service \(uuid)")
+            }
+
             powered = true;
         }
         if(stateStr == ".poweredOff")
